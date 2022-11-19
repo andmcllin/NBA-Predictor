@@ -16,10 +16,11 @@ n_cols = X_train.shape[1]
 
 model = Sequential()
 
-model.add(Dense(14, activation='relu', input_shape=(n_cols,)))
-model.add(Dense(10, activation='relu'))
-model.add(Dense(7, activation='relu'))
-model.add(Dense(5, activation='relu'))
+model.add(Dense(17, activation='relu', input_shape=(n_cols,)))
+model.add(Dense(17, activation='relu'))
+model.add(Dense(17, activation='relu'))
+model.add(Dense(17, activation='relu'))
+model.add(Dense(17, activation='relu'))
 
 model.add(Dense(2, activation='softmax'))
 

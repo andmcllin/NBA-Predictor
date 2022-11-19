@@ -13,4 +13,6 @@ def getTeamPossStats(year):
     df = pd.read_html(str(table))[0]
     df['Year'] = year
 
+    df['Team'] = df['Team'].str.replace('*', '', regex=True)
+
     return df

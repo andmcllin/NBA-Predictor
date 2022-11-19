@@ -1,5 +1,5 @@
 from getScheduleandResults import getScheduleandResultsPast
-from getTeamStatsZScore import teamStatsZscore
+from getTeamStatsZScore import teamStatsZScore
 import pandas as pd
 import numpy as np
 import time
@@ -20,7 +20,7 @@ def getGameResultsandZScoreDiff(startyear, endyear):
         df['Home Win'] = np.where((df['PTS.1'] > df['PTS']), 1, 0)
         df = df.drop(columns=['PTS', 'PTS.1'])
 
-        df2 = teamStatsZscore(year)
+        df2 = teamStatsZScore(year)
 
         time.sleep(3)
 
@@ -29,10 +29,13 @@ def getGameResultsandZScoreDiff(startyear, endyear):
 
         merged_df['2PDiff'] = merged_df['2PHome'] - merged_df['2PVisitor']
         merged_df['2PADiff'] = merged_df['2PAHome'] - merged_df['2PAVisitor']
+        merged_df['2P%Diff'] = merged_df['2P%Home'] - merged_df['2P%Visitor']
         merged_df['3PDiff'] = merged_df['3PHome'] - merged_df['3PVisitor']
         merged_df['3PADiff'] = merged_df['3PAHome'] - merged_df['3PAVisitor']
+        merged_df['3P%Diff'] = merged_df['3P%Home'] - merged_df['3P%Visitor']
         merged_df['FTDiff'] = merged_df['FTHome'] - merged_df['FTVisitor']
         merged_df['FTADiff'] = merged_df['FTAHome'] - merged_df['FTAVisitor']
+        merged_df['FT%Diff'] = merged_df['FT%Home'] - merged_df['FT%Visitor']
         merged_df['ORBDiff'] = merged_df['ORBHome'] - merged_df['ORBVisitor']
         merged_df['DRBDiff'] = merged_df['DRBHome'] - merged_df['DRBVisitor']
         merged_df['ASTDiff'] = merged_df['ASTHome'] - merged_df['ASTVisitor']
@@ -51,4 +54,4 @@ def getGameResultsandZScoreDiff(startyear, endyear):
     final_df.to_csv('gameResultsandZScoreDiff.csv', index=False)
     return final_df
 
-getGameResultsandZScoreDiff(2010, 2019)
+getGameResultsandZScoreDiff(2021, 2023)
