@@ -34,6 +34,7 @@ def dailyGamesDataFrame(date):
     merged_df['TOVDiff'] = merged_df['TOVHome'] - merged_df['TOVVisitor']
     merged_df['PFDiff'] = merged_df['PFHome'] - merged_df['PFVisitor']
     merged_df['PTSDiff'] = merged_df['PTSHome'] - merged_df['PTSVisitor']
+    merged_df['PADiff'] = merged_df['DRtgHome'] - merged_df['DRtgVisitor']
 
     merged_df = merged_df[merged_df.columns.drop(list(merged_df.filter(regex='Home$')))]
     merged_df = merged_df[merged_df.columns.drop(list(merged_df.filter(regex='Visitor$')))]
@@ -66,5 +67,3 @@ def interpretPredictions():
         awayTeam = df[0]['Visiting Team'][gameNum]
 
         print('There is a ' + winProb + '%' + ' chance that the ' + homeTeam + ' will defeat the ' + awayTeam)
-
-interpretPredictions()
