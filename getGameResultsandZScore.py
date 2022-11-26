@@ -27,12 +27,7 @@ def getGameResultsandZScoreDiff(startyear, endyear):
         merged_df = pd.merge(df, df2, left_on='Home Team', right_on='Team')
         merged_df = pd.merge(merged_df, df2, left_on='Visiting Team', right_on='Team', suffixes=('Home', 'Visitor'))
 
-        merged_df['2PDiff'] = merged_df['2PHome'] - merged_df['2PVisitor']
-        merged_df['2PADiff'] = merged_df['2PAHome'] - merged_df['2PAVisitor']
-        merged_df['2P%Diff'] = merged_df['2P%Home'] - merged_df['2P%Visitor']
-        merged_df['3PDiff'] = merged_df['3PHome'] - merged_df['3PVisitor']
-        merged_df['3PADiff'] = merged_df['3PAHome'] - merged_df['3PAVisitor']
-        merged_df['3P%Diff'] = merged_df['3P%Home'] - merged_df['3P%Visitor']
+        merged_df['TS%Diff'] = merged_df['TS%Home'] - merged_df['TS%Visitor']
         merged_df['FTDiff'] = merged_df['FTHome'] - merged_df['FTVisitor']
         merged_df['FTADiff'] = merged_df['FTAHome'] - merged_df['FTAVisitor']
         merged_df['FT%Diff'] = merged_df['FT%Home'] - merged_df['FT%Visitor']

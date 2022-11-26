@@ -24,13 +24,11 @@ def getTeamPossStats(year):
     df2 = pd.read_html(str(table))[0]
 
     df2.columns = [x[1] for x in df2.columns]
-    df2 = df2[['Team', 'DRtg']]
+    df2 = df2[['Team', 'DRtg', 'TS%']]
 
     merged_df = df.merge(df2, on='Team')
     merged_df['Year'] = year
 
     merged_df['Team'] = merged_df['Team'].str.replace('*', '', regex=True)
-
-
 
     return merged_df
