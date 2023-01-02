@@ -207,7 +207,7 @@ def getScheduleToday(date):
     yearstring = date.strftime("%Y")
     monthstring = str.lower(date.strftime("%B"))
     today = date.strftime("%a, %b %#d, %Y")
-    year = int(yearstring) + 1
+    year = int(yearstring)
 
     base_url = 'https://www.basketball-reference.com/leagues/NBA_{}_games-' + monthstring + '.html'
 

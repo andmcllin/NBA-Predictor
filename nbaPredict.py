@@ -10,7 +10,7 @@ def dailyGamesDataFrame(date):
     df = df.rename(columns={'Visitor/Neutral' : 'Visiting Team', 'Home/Neutral' : 'Home Team'})        
     df = df.drop(columns=['PTS', 'PTS.1'])
 
-    year = int(date.strftime("%Y")) + 1
+    year = int(date.strftime("%Y"))
 
     df2 = teamStatsZScore(year)
 
