@@ -1,6 +1,7 @@
 import pandas as pd
 import requests
 from bs4 import BeautifulSoup
+from io import StringIO
 import time
 from sklearn.preprocessing import StandardScaler
 
@@ -10,7 +11,7 @@ def getTeamStats(year):
     data = requests.get(req_url)
     soup = BeautifulSoup(data.content, 'html.parser')
     table = soup.find('table', attrs={'id': 'per_poss-team'})
-    poss_df = pd.read_html(str(table))[0]
+    poss_df = pd.read_html(StringIO(str(table)))[0]
 
     del base_url, req_url, data, soup, table
 
@@ -21,7 +22,7 @@ def getTeamStats(year):
     data = requests.get(req_url)
     soup = BeautifulSoup(data.content, 'html.parser')
     table = soup.find('table', attrs={'id': 'advanced-team'})
-    adv_df = pd.read_html(str(table))[0]
+    adv_df = pd.read_html(StringIO(str(table)))[0]
 
     del base_url, req_url, data, soup, table
 
@@ -33,7 +34,7 @@ def getTeamStats(year):
     del poss_df, adv_df
 
     df['Year'] = year
-    df['Team'] = df['Team'].str.replace('*', '', regex=True)
+    df['Team'] = df['Team'].str.replace('\*', '', regex=True)
 
     df.set_index(['Team', 'Year'], inplace=True)
     df.drop(columns=['Rk', 'G', 'MP'], inplace=True)
