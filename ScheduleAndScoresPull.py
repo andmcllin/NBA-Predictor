@@ -4,7 +4,6 @@ import time
 from bs4 import BeautifulSoup
 from io import StringIO
 
-
 def getPastScheduleAndScores(year):
     yearlydf = pd.DataFrame()
     months = ['october', 'november', 'december', 'january', 'february', 'march', 'april']

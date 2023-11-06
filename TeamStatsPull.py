@@ -34,7 +34,7 @@ def getTeamStats(year):
     del poss_df, adv_df
 
     df['Year'] = year
-    df['Team'] = df['Team'].str.replace('\*', '', regex=True)
+    df['Team'] = df['Team'].str.replace('/*', '', regex=True)
 
     df.set_index(['Team', 'Year'], inplace=True)
     df.drop(columns=['Rk', 'G', 'MP'], inplace=True)
