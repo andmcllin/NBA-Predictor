@@ -31,9 +31,7 @@ def createGameResultsCSV(startyear, endyear):
         merged_df = merged_df[merged_df.columns.drop(list(merged_df.filter(regex='Visitor$')))]
 
         df = pd.concat([df, merged_df])
-
-        del merged_df
-
+        
+    del merged_df
 
     df.to_csv('nbaGameResults.csv.gz', compression={'method':'gzip'}, index=False)
-    return 0
