@@ -7,11 +7,11 @@ from keras.callbacks import ModelCheckpoint, EarlyStopping
 def createModel():
     df = pd.read_csv('nbaGameResults.csv.gz', compression='gzip', header=0, sep=',', quotechar='"')
 
-    X = df.drop(columns=['Date', 'Visiting Team', 'Home Team', 'Home Win'], axis=1)
+    X = df.drop(columns=['Date', 'Season', 'Visiting Team', 'Home Team', 'Margin', 'Home Win'], axis=1)
     y = df['Home Win']
 
     del df
-
+    
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.25)
 
     n_cols = X.shape[1]

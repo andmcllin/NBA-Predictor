@@ -2,13 +2,25 @@ from ScheduleAndScoresPull import getTodaysSchedule
 from TeamStatsPull import getTeamStats
 import numpy as np
 import pandas as pd
+from datetime import timedelta
 from keras.models import load_model
 
 def makePredictions(date):
     schedule_df = getTodaysSchedule(date)
 
+    yesterday_df = getTodaysSchedule(date-timedelta(days=1))
+    yesterdays_teams = np.append(yesterday_df['Visitor/Neutral'].values, yesterday_df['Home/Neutral'].values)
+
+    del yesterday_df
+
     schedule_df.rename(columns={'Visitor/Neutral' : 'Visiting Team', 'Home/Neutral' : 'Home Team'}, inplace=True)        
+    schedule_df.insert(5, "Home Back to Back", False)
+    schedule_df.insert(6, "Visiting Back to Back", False)
     schedule_df.drop(columns=['PTS', 'PTS.1'], inplace = True)
+
+    schedule_df['Home Back to Back'] = np.where(schedule_df['Home Team'].isin(yesterdays_teams), True, False)
+    schedule_df['Visiting Back to Back'] = np.where(schedule_df['Visiting Team'].isin(yesterdays_teams), True, False)
+
 
     if int(date.strftime("%m")) >= 9:
         year = int(date.strftime("%Y")) + 1

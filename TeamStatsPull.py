@@ -3,7 +3,7 @@ import requests
 from bs4 import BeautifulSoup
 from io import StringIO
 import time
-from sklearn.preprocessing import StandardScaler
+from sklearn.preprocessing import RobustScaler
 
 def getTeamStats(year):
     base_url = 'https://www.basketball-reference.com/leagues/NBA_{}.html'
@@ -15,18 +15,14 @@ def getTeamStats(year):
     poss_df.drop(columns=['Rk', 'G', 'MP'], inplace=True)
     poss_df = poss_df.rename(columns={c: c+'_For' for c in poss_df.columns if c not in ['Team']})
 
-    del base_url, req_url, data, soup, table
+    del table
 
     time.sleep(3)
 
-    base_url = 'https://www.basketball-reference.com/leagues/NBA_{}.html'
-    req_url = base_url.format(year)
-    data = requests.get(req_url)
-    soup = BeautifulSoup(data.content, 'html.parser')
     table = soup.find('table', attrs={'id': 'advanced-team'})
     adv_df = pd.read_html(StringIO(str(table)))[0]
 
-    del base_url, req_url, data, soup, table
+    del table
 
     adv_df.columns = [x[1] for x in adv_df.columns]
     adv_df = adv_df[['Team', 'ORtg', 'DRtg', 'TS%']]
@@ -42,11 +38,7 @@ def getTeamStats(year):
     for_df.set_index(['Team', 'Year'], inplace=True)
 
     time.sleep(3)
-
-    base_url = 'https://www.basketball-reference.com/leagues/NBA_{}.html'
-    req_url = base_url.format(year)
-    data = requests.get(req_url)
-    soup = BeautifulSoup(data.content, 'html.parser')
+    
     table = soup.find('table', attrs={'id': 'per_poss-opponent'})
     against_df = pd.read_html(StringIO(str(table)))[0]
     against_df.drop(columns=['Rk', 'G', 'MP'], inplace=True)
@@ -63,7 +55,7 @@ def getTeamStats(year):
 
     del for_df, against_df
 
-    scaler = StandardScaler()
+    scaler = RobustScaler()
 
     df = pd.DataFrame(scaler.fit_transform(df), columns=df.columns, index=df.index)
     df.reset_index(inplace=True)
